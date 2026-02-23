@@ -1,0 +1,16 @@
+import math
+
+# Екран
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+FPS = 60
+
+# Кольори
+BG_COLOR = (30, 30, 30)
+
+# Фізика Машини
+MAX_SPEED = 8
+ACCELERATION = 0.2
+ROTATION_SPEED = 4
+FRICTION = 0.05
+BRAKE_STRENGTH = 0.4
