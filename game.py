@@ -72,3 +72,42 @@ class GameScene:
         self.big_font = pygame.font.SysFont(None, 80)
         self.last_tick = pygame.time.get_ticks() # Знадобиться пізніше для того аби впевнитись, що просадка фпс
         # не впливала на роботу таймера
+
+# --- ЗАВАНТАЖЕННЯ ЗВУКІВ ---
+        try:
+            pygame.mixer.music.load("Assets/sounds/meat.mp3")
+            pygame.mixer.music.set_volume(0.4)
+            pygame.mixer.music.play(-1)
+        except Exception:
+            print("Музику не знайдено")
+
+        try:
+            self.crash_sound = pygame.mixer.Sound("Assets/sounds/crash.mp3")
+            self.crash_sound.set_volume(0.7)
+        except Exception:
+            self.crash_sound = None
+
+        try:
+            self.engine_sound = pygame.mixer.Sound("Assets/sounds/engine_idle.wav")
+            self.engine_sound.set_volume(1.5)
+            self.engine_sound.play(-1)
+
+            self.rev_sound = pygame.mixer.Sound("Assets/sounds/engine_rev.mp3")
+            self.rev_sound.set_volume(1.5)
+        except Exception:
+            self.engine_sound = None
+            self.rev_sound = None
+
+        self.last_rev_time = 0
+        self.rev_cooldown = 2500
+
+        try:
+            self.beep_sound = pygame.mixer.Sound("Assets/sounds/beep.mp3")
+            self.beep_sound.set_volume(0.8)
+            self.go_sound = pygame.mixer.Sound("Assets/sounds/go.mp3")
+            self.go_sound.set_volume(0.8)
+        except Exception:
+            self.beep_sound = None
+            self.go_sound = None
+
+        self.load_map()
