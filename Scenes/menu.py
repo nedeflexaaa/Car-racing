@@ -45,3 +45,13 @@ def handle_event(self, event):
                     return "exit"
 
         return None
+
+def run(self):
+        self.screen.blit(self.bg_image, (0, 0))
+        for i, option in enumerate(self.options):
+            x_pos, y_pos = SCREEN_WIDTH - 350, 300 + i * 100
+            img_rect = self.button_images[i].get_rect(topleft=(x_pos, y_pos))
+            if self.selected == i:
+                pygame.draw.rect(self.screen, (255, 0, 0), img_rect.inflate(10, 10), 4)
+            self.screen.blit(self.button_images[i], img_rect) 
+            
