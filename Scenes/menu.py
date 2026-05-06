@@ -26,3 +26,22 @@ class MenuScene:
                 p = pygame.Surface((300, 80))
                 p.fill((100, 100, 100))
                 self.button_images.append(p)
+            
+def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                self.selected = (self.selected - 1) % len(self.options) # Остача від ділення(%) треба для того, аби
+                # При натисканні вниз на останній кнопці вибір переходив на гору списку
+
+            if event.key == pygame.K_DOWN:
+                self.selected = (self.selected + 1) % len(self.options) # Аналогічно
+
+            if event.key == pygame.K_RETURN:
+                if self.selected == 0:
+                    return "start"
+                elif self.selected == 1:
+                    return "choice"
+                elif self.selected == 2:
+                    return "exit"
+
+        return None
