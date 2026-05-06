@@ -78,5 +78,16 @@ class CarSelectScene:
 
             elif event.key == pygame.K_ESCAPE:
                 return "menu"
-                
+
         return None
+
+    def run(self):
+        self.screen.fill((20, 20, 40))
+
+        title = self.title_font.render("SELECT YOUR CAR", True, (255, 200, 0))
+        self.screen.blit(title, (SCREEN_WIDTH // 2 - 250, 100))
+
+        for i, option in enumerate(self.options):
+            color = (0, 255, 0) if i == self.selected else (255, 255, 255)
+            text = self.font.render(option, True, color)
+            self.screen.blit(text, (SCREEN_WIDTH // 2 - 350, 250 + i * 80))
