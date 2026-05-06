@@ -47,3 +47,10 @@ class CarSelectScene:
                     color_variants.append(placeholder)
             self.car_images.append(color_variants)
                    
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                self.selected = (self.selected - 1) % len(self.options)
+            elif event.key == pygame.K_DOWN:
+                self.selected = (self.selected + 1) % len(self.options)
+        return None
