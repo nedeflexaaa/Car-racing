@@ -51,6 +51,19 @@ class CarSelectScene:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 self.selected = (self.selected - 1) % len(self.options)
+                
             elif event.key == pygame.K_DOWN:
                 self.selected = (self.selected + 1) % len(self.options)
+
+        # Навігація по кольорах (Вліво/Вправо)
+            elif event.key == pygame.K_LEFT:
+                if self.selected < 3:
+                    # Дивимося, скільки кольорів є САМЕ У ЦІЄЇ машини
+                    num_colors = len(self.car_images[self.selected])
+                    self.selected_colors[self.selected] = (self.selected_colors[self.selected] - 1) % num_colors
+
+            elif event.key == pygame.K_RIGHT:
+                if self.selected < 3:
+                    num_colors = len(self.car_images[self.selected])
+                    self.selected_colors[self.selected] = (self.selected_colors[self.selected] + 1) % num_colors
         return None
