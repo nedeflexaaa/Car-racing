@@ -69,3 +69,24 @@ class Car(pygame.sprite.Sprite): #Car є нащадком базового кл�
         self.position = pygame.math.Vector2(x, y)
         self.velocity = 0
         self.angle = 0
+
+        def get_input(self):
+            keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_UP] or keys[pygame.K_w]:
+                if self.velocity < 0:  # Якщо машина котиться назад
+                    self.velocity += BRAKE_STRENGTH  # То спочатку гальмуємо до зупинки(так швидше зупинитись)
+                else:
+                    self.velocity += self.acceleration
+            elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                if self.velocity > 0:  # Аналогічне пояснення як і для руху вперед
+                    self.velocity -= BRAKE_STRENGTH
+                else:
+                    self.velocity -= self.acceleration
+
+            if abs(self.velocity) > 0.1:
+                direction = 1 if self.velocity > 0 else -1  # Протилежні сторони для повороту якщо їдемо назад
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    self.angle += self.rotation_speed * direction
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    self.angle -= self.rotation_speed * direction
