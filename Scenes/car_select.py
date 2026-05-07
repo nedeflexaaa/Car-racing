@@ -6,10 +6,18 @@ class CarSelectScene:
         self.screen = screen
         self.font = pygame.font.SysFont(None, 60)
         self.title_font = pygame.font.SysFont(None, 80)
+
+        # Маленький шрифт для підказки про кольори
         self.hint_font = pygame.font.SysFont(None, 40)
+        
         self.options = ["Fast & Slippery", "Balanced Car", "Slow & Heavy", "Back to Menu"]
         self.selected = 0
+
+        # Масив, що запам'ятовує обраний колір (від 0 до 3) для кожної з 3 машин
         self.selected_colors = [0, 0, 0]
+
+        # --- ЗАВАНТАЖЕННЯ КАРТИНОК МАШИН (3 типи авто по 4 кольори) ---
+        self.car_images = []
 
  image_paths = [
             [  # Машина 1 (Fast & Slippery)
@@ -45,10 +53,11 @@ class CarSelectScene:
                     placeholder = pygame.Surface((120, 240))
                     placeholder.fill(debug_colors[color_index])
                     color_variants.append(placeholder)
-            self.car_images.append(color_variants)
+            self.car_images.append(color_variants) # Завантаження кожного з маленьких масивчіків в один побільше
                    
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN: # З всіх івентів ми перевіряємо лише ті, де натискаються клавіші.
+            # Навігація по списку машин (Вгору/Вниз)
             if event.key == pygame.K_UP:
                 self.selected = (self.selected - 1) % len(self.options)
 
