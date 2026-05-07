@@ -14,7 +14,7 @@ class VictoryScene:
             "Assets/victory/homer.jpg",
             "Assets/victory/breaking_bad.jpg"
         ]
-for path in image_paths:
+        for path in image_paths:
             try:
                 img = pygame.image.load(path).convert()
                 img = pygame.transform.scale(img, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -39,5 +39,10 @@ for path in image_paths:
             pygame.mixer.music.play(-1)  # Грає по колу
         except Exception as e:
             print(f"Помилка музики перемоги: {e}")
-
-        
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            # Якщо натиснути Enter або Esc - виходимо в меню
+            if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
+                pygame.mixer.music.stop()  # Вимикаємо фанфари
+                return "menu"
+        return None
