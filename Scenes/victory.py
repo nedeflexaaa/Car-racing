@@ -27,3 +27,17 @@ for path in image_paths:
             fallback = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
             fallback.fill((0, 150, 0))
             self.images.append(fallback)
+                # --- НАЛАШТУВАННЯ СЛАЙДШОУ ---
+        self.current_image_index = 0
+        self.last_image_change_time = pygame.time.get_ticks()
+        self.image_display_time = 2000  # Скільки мілісекунд показувати 1 картинку
+
+        # --- ЗАВАНТАЖЕННЯ МУЗИКИ ---
+        try:
+            pygame.mixer.music.load("Assets/victory/music.mp3")
+            pygame.mixer.music.set_volume(0.8)
+            pygame.mixer.music.play(-1)  # Грає по колу
+        except Exception as e:
+            print(f"Помилка музики перемоги: {e}")
+
+        
