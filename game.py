@@ -313,5 +313,6 @@ class GameScene:
         self.screen.blit(lap_text, (20, 20))
         self.screen.blit(map_text, (20, 60))
         self.screen.blit(timer_text, (SCREEN_WIDTH - 150, 20))
+        #Малювання різних надписів
 
         return None
