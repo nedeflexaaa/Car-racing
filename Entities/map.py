@@ -1,9 +1,10 @@
 import pygame
 
-
-class Map(pygame.sprite.Sprite):
+class TrackMap(pygame.sprite.Sprite):
     def __init__(self, visual_path, hitbox_path):
-        super().__init__()
+        super().__init__() # Базовий клас Sprite вже має свій власний, прихований метод __init__()
+        # Якщо видалити super().__init__(), то init, який був наслідуваний від Sprite буде проігнорований
+        # Щоб цього не слалось, використовується super().__init__()
 
         # 1. Завантажуємо оригінальні картинки
         original_image = pygame.image.load(visual_path).convert_alpha()
