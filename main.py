@@ -13,7 +13,6 @@ clock = pygame.time.Clock()
 
 current_scene = "menu"
 
-# Ініціалізація сцен(створення об'єктів з відповідних класів)
 menu_scene = MenuScene(screen)
 car_select_scene = CarSelectScene(screen)
 game_scene = None
@@ -27,12 +26,10 @@ while True:
             pygame.quit()
             sys.exit()
 
-        # --- ОБРОБКА ПОДІЙ ГОЛОВНОГО МЕНЮ ---
         if current_scene == "menu":
             #Якщо зараз працю меню, то ми використовуємо функцію handle_event(), що прописана в menu.py
             result = menu_scene.handle_event(event)
             if result == "start":
-                # Якщо відразу починаємо грати, то передаємо потрібні значення в об'єкт класу, який прописаний в game.py:
                 game_scene = GameScene(screen, chosen_car_index, chosen_color_index)
                 current_scene = "game"
             elif result == "choice":
@@ -40,8 +37,7 @@ while True:
             elif result == "exit":
                 pygame.quit()
                 sys.exit()
-        # --- ОБРОБКА ПОДІЙ ВИБОРУ АВТО ---
-        #Це прописано окремо від інших, бо це єдиний вибір в головному меню, який не переносить прямо в гру, але все одно має певний інтерактив
+
         elif current_scene == "choice":
             result = car_select_scene.handle_event(event)
 
@@ -57,3 +53,14 @@ while True:
 
                 print(f"Обрано машину № {chosen_car_index}, колір № {chosen_color_index}")
                 current_scene = "menu"
+
+        elif current_scene == "game":
+            result = game_scene.handle_event(event)
+            if result == "menu": #Тобто якщо під час гри натиснуто кнопку Q, яка якраз таки і змінює result на menu, то ми виходимо в меню
+                current_scene = "menu"
+
+        elif current_scene == "victory":
+            result = victory_scene.handle_event(event)
+            if result == "menu": #Тут під час слайд-шоу для переможця програма очікує на натиснення Enter, який відповідає за зміну result на menu
+                current_scene = "menu"
+
