@@ -46,3 +46,24 @@ class VictoryScene:
                 pygame.mixer.music.stop()  # Вимикаємо фанфари
                 return "menu"
         return None
+    
+    def run(self):
+        # --- ЛОГІКА СЛАЙДШОУ ---
+        current_time = pygame.time.get_ticks()
+        # Перевіряємо, чи пройшла визначена кількість часу з минулої зміни картинки
+        if current_time - self.last_image_change_time > self.image_display_time:
+            # Перемикаємо на наступну (і зациклюємо по колу)
+            self.current_image_index = (self.current_image_index + 1) % len(self.images)
+            self.last_image_change_time = current_time
+
+        # Малюємо поточну картинку
+        current_image = self.images[self.current_image_index]
+        self.screen.blit(current_image, (0, 0))
+
+        # Малюємо підказку знизу, як вийти
+        text = self.font.render("Ви переможець - вітаємо!!! Press ENTER to return to Menu", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50))
+
+        # Робимо чорну підложку під текст
+        pygame.draw.rect(self.screen, (0, 0, 0), text_rect.inflate(20, 10))
+        self.screen.blit(text, text_rect)
