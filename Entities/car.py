@@ -46,3 +46,12 @@ class Car(pygame.sprite.Sprite): #Car є нащадком базового кл�
                 "Assets/cars/Car_3/red(special).png"
             ]
         ]
+        # --- 3. ЗАВАНТАЖЕННЯ КАРТИНКИ ---
+        try:
+            correct_image_path = image_paths[car_index][color_index]  # Беремо шлях машинки з масиву
+            self.original_image = pygame.image.load(correct_image_path).convert_alpha()
+            # Зміна розмірів машини відносно мапи
+            self.original_image = pygame.transform.scale(self.original_image, car_size)
+        except Exception:
+            self.original_image = pygame.Surface(car_size)  # Затичка на випадок відсутності зображення
+            self.original_image.fill((0, 255, 0))
