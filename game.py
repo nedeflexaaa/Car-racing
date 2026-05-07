@@ -147,3 +147,25 @@ class GameScene:
 
         pygame.mixer.music.pause()
         self.last_tick = pygame.time.get_ticks()
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE and not self.game_over:
+                self.paused = not self.paused
+            if event.key == pygame.K_r:
+                self.load_map()
+            elif event.key == pygame.K_q:
+                if getattr(self, 'engine_sound', None): self.engine_sound.stop()
+                if getattr(self, 'rev_sound', None): self.rev_sound.stop()
+                pygame.mixer.music.stop()
+                return "menu"
+
+            if self.game_over:
+                if event.key == pygame.K_r:
+                    self.load_map()
+                elif event.key == pygame.K_q:
+                    if getattr(self, 'engine_sound', None): self.engine_sound.stop()
+                    if getattr(self, 'rev_sound', None): self.rev_sound.stop()
+                    pygame.mixer.music.stop()
+                    return "menu"
+        return None
