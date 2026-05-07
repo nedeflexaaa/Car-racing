@@ -26,3 +26,23 @@ class Car(pygame.sprite.Sprite): #Car є нащадком базового кл�
             self.acceleration = ACCELERATION + 0.1
             self.rotation_speed = ROTATION_SPEED + 2
             self.friction = FRICTION + 0.05
+
+        # --- 2. ШЛЯХИ ДО ВСІХ ВАРІАНТІВ МАШИН ТА КОЛЬОРІВ ---
+        image_paths = [
+            [  # Машина 1 (Fast & Slippery)
+                "Assets/cars/Car_1/blue.png",
+                "Assets/cars/Car_1/pink.png",
+                "Assets/cars/Car_1/purple.png",
+                "Assets/cars/Car_1/red.png"
+            ],
+            [  # Машина 2 (Balanced)
+                "Assets/cars/Car_2/blue.png",
+                "Assets/cars/Car_2/pink.png",
+                "Assets/cars/Car_2/purple.png",
+                "Assets/cars/Car_2/red.png"
+            ],
+            [  # Машина 3 (Slow & Heavy)
+                "Assets/cars/Car_3/purple(special).png",
+                "Assets/cars/Car_3/red(special).png"
+            ]
+        ]
