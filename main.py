@@ -40,3 +40,20 @@ while True:
             elif result == "exit":
                 pygame.quit()
                 sys.exit()
+        # --- ОБРОБКА ПОДІЙ ВИБОРУ АВТО ---
+        #Це прописано окремо від інших, бо це єдиний вибір в головному меню, який не переносить прямо в гру, але все одно має певний інтерактив
+        elif current_scene == "choice":
+            result = car_select_scene.handle_event(event)
+
+            if result == "menu":
+                current_scene = "menu"  # Повертаємось назад
+
+            # Якщо result починається на "car_selected_"
+            elif result and result.startswith("car_selected_"):
+                # Розбиваємо рядок на частини. Наприклад: "car_selected_1_2"
+                parts = result.split("_")
+                chosen_car_index = int(parts[2])  # Номер машини
+                chosen_color_index = int(parts[3])  # Номер кольору
+
+                print(f"Обрано машину № {chosen_car_index}, колір № {chosen_color_index}")
+                current_scene = "menu"
