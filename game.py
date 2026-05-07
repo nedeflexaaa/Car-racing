@@ -111,3 +111,39 @@ class GameScene:
             self.go_sound = None
 
         self.load_map()
+
+
+
+    def load_map(self):
+        config = self.maps_config[self.current_map_index]
+        MapClass = config["map_class"]
+        self.track = MapClass(config["visual"], config["hitbox"])
+
+        start_x, start_y = config["start_pos"]
+        self.player = Car(start_x, start_y, self.car_index, self.color_index, config["car_size"])
+        self.player.angle = config["start_angle"] # Даємо початковий кут
+        self.player.rotate() # Використовуємо метод rotate() з car.py
+
+        self.all_sprites = pygame.sprite.Group() # Групування спрайтів(поки одного) для можливості в майбутньому
+        # додати інші машини\перешкоди
+        self.all_sprites.add(self.player)
+
+        self.camera = Camera(self.track.rect.width, self.track.rect.height)
+        self.camera.update(self.player)
+
+        self.checkpoints = config["checkpoints"]
+        self.time_left = config["time_limit"]
+        self.target_laps = config["target_laps"]
+
+        self.current_checkpoint = 0
+        self.lap = 1
+        self.last_tick = pygame.time.get_ticks()
+        self.game_over = False
+        self.paused = False
+
+        self.countdown_active = True
+        self.countdown_start = pygame.time.get_ticks()
+        self.last_countdown_step = 4
+
+        pygame.mixer.music.pause()
+        self.last_tick = pygame.time.get_ticks()
