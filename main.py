@@ -21,3 +21,22 @@ victory_scene = None
 
 chosen_car_index = 0
 chosen_color_index = 0
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        # --- ОБРОБКА ПОДІЙ ГОЛОВНОГО МЕНЮ ---
+        if current_scene == "menu":
+            #Якщо зараз працю меню, то ми використовуємо функцію handle_event(), що прописана в menu.py
+            result = menu_scene.handle_event(event)
+            if result == "start":
+                # Якщо відразу починаємо грати, то передаємо потрібні значення в об'єкт класу, який прописаний в game.py:
+                game_scene = GameScene(screen, chosen_car_index, chosen_color_index)
+                current_scene = "game"
+            elif result == "choice":
+                current_scene = "choice"
+            elif result == "exit":
+                pygame.quit()
+                sys.exit()
