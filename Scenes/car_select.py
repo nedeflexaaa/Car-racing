@@ -91,3 +91,17 @@ class CarSelectScene:
             color = (0, 255, 0) if i == self.selected else (255, 255, 255)
             text = self.font.render(option, True, color)
             self.screen.blit(text, (SCREEN_WIDTH // 2 - 350, 250 + i * 80))
+
+        # --- МАЛЮЄМО МАШИНКУ СПРАВА ---
+        if self.selected < 3:
+            # Беремо поточний колір для поточної машини
+            color_idx = self.selected_colors[self.selected]
+            current_image = self.car_images[self.selected][color_idx]
+
+            image_rect = current_image.get_rect(center=(SCREEN_WIDTH // 2 + 200, 340))
+            self.screen.blit(current_image, image_rect)
+
+            # Малюємо підказку під машинкою
+            hint_text = self.hint_font.render(f"< Color {color_idx + 1} >", True, (150, 150, 150))
+            hint_rect = hint_text.get_rect(center=(SCREEN_WIDTH // 2 + 200, 480))
+            self.screen.blit(hint_text, hint_rect)
