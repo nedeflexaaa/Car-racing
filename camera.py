@@ -13,3 +13,11 @@ class Camera:
         # 1. Рахуємо ідеальний центр, ніби обмежень немає
         x = -target.rect.centerx + int(SCREEN_WIDTH / 2)
         y = -target.rect.centery + int(SCREEN_HEIGHT / 2)
+
+    def apply(self, entity):
+        # Повертає нові координати об'єкта з урахуванням зсуву камери
+        return entity.rect.move(self.camera.topleft)
+
+    def apply_rect(self, rect):
+        # Те саме, але для звичайних прямокутників
+        return rect.move(self.camera.topleft)
