@@ -90,3 +90,17 @@ class Car(pygame.sprite.Sprite): #Car є нащадком базового кл�
                     self.angle += self.rotation_speed * direction
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                     self.angle -= self.rotation_speed * direction
+
+        def move(self):
+            if self.velocity > self.max_speed:  # Не дає розігнатись швидше за максимальну швидкість
+                self.velocity = self.max_speed
+            if self.velocity < -self.max_speed / 2:  # Те ж саме, але менша швидкість назад
+                self.velocity = -self.max_speed / 2
+
+            if self.velocity > 0:
+                self.velocity -= self.friction  # Сповільнення швидкості з часом шляхом тертя шини по землі
+                if self.velocity < 0: self.velocity = 0  # Зупинка, аби машина не почала сама їхати назад
+            elif self.velocity < 0:  # Аналогічно, але для руху назад
+                self.velocity += self.friction
+                if self.velocity > 0: self.velocity = 0
+        
