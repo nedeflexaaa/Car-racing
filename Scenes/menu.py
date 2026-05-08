@@ -36,38 +36,37 @@ class MenuScene:
                 p.fill((100, 100, 100))
                 self.button_images.append(p)
             
-def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                self.selected = (self.selected - 1) % len(self.options) # Остача від ділення(%) треба для того, аби
-                # При натисканні вниз на останній кнопці вибір переходив на гору списку
+    def handle_event(self, event):
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.selected = (self.selected - 1) % len(self.options) # Остача від ділення(%) треба для того, аби
+                    # При натисканні вниз на останній кнопці вибір переходив на гору списку
 
-            if event.key == pygame.K_DOWN:
-                self.selected = (self.selected + 1) % len(self.options) # Аналогічно
+                if event.key == pygame.K_DOWN:
+                    self.selected = (self.selected + 1) % len(self.options) # Аналогічно
 
-            if event.key == pygame.K_RETURN:
-                if self.selected == 0:
-                    return "start"
-                elif self.selected == 1:
-                    return "choice"
-                elif self.selected == 2:
-                    return "exit"
+                if event.key == pygame.K_RETURN:
+                    if self.selected == 0:
+                        return "start"
+                    elif self.selected == 1:
+                        return "choice"
+                    elif self.selected == 2:
+                        return "exit"
 
-        return None
+            return None
 
-def run(self):
-    # МАЛЮЄМО ФОН
-    self.screen.blit(self.bg_image, (0, 0))
+    def run(self):
+        # МАЛЮЄМО ФОН
+        self.screen.blit(self.bg_image, (0, 0))
 
-    for i, option in enumerate(self.options):
-        # Задаємо координати списку кнопок
-        x_pos = SCREEN_WIDTH - 350
-        y_pos = 300 + i * 100
+        for i, option in enumerate(self.options):
+            # Задаємо координати списку кнопок
+            x_pos = SCREEN_WIDTH - 350
+            y_pos = 300 + i * 100
 
-        # Беремо картинку з нашого списку під потрібним індексом
-        current_btn_image = self.button_images[i]
+            # Беремо картинку з нашого списку під потрібним індексом
+            current_btn_image = self.button_images[i]
 
-            # Отримуємо розміри і координати картинки
             image_rect = current_btn_image.get_rect(topleft=(x_pos, y_pos))
 
             # Якщо кнопка вибрана, малюємо навколо неї червону рамку

@@ -19,7 +19,7 @@ class CarSelectScene:
         # --- ЗАВАНТАЖЕННЯ КАРТИНОК МАШИН (3 типи авто по 4 кольори) ---
         self.car_images = []
 
- image_paths = [
+        image_paths = [
             [  # Машина 1 (Fast & Slippery)
                 "Assets/cars/Car_1/blue.png",
                 "Assets/cars/Car_1/pink.png",
