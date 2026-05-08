@@ -63,4 +63,27 @@ while True:
             result = victory_scene.handle_event(event)
             if result == "menu": #Тут під час слайд-шоу для переможця програма очікує на натиснення Enter, який відповідає за зміну result на menu
                 current_scene = "menu"
+        # --- ВІДМАЛЬОВКА СЦЕН ---
+    if current_scene == "menu":
+        menu_scene.run()
+
+    elif current_scene == "choice":
+        car_select_scene.run()  # Відмальовуємо вибір авто
+
+    elif current_scene == "game":
+        result = game_scene.run() #До моменту перетину останнього кола current_scene = "game"
+        if result == "menu":
+            current_scene = "menu"
+        elif result == "victory": #Коли гравець перетинає фініш, run() розуміє, що кола закінчилися, і повертає слово "victory". Код у main.py ловить це слово (elif result == "victory":).
+            victory_scene = VictoryScene(screen)  # Створюємо сцену перемоги. Завантажуємо картинки і музику в пам'ять тільки тоді, коли вони реально знадобилися.
+            current_scene = "victory" # Перемикаємо на презентацію
+
+    elif current_scene == "victory":
+        victory_scene.run()
+
+    # Миттєво оновлює екран. Показує гравцеві повністю готовий новий кадр
+    # (підміняє невидимий буфер на видимий екран), щоб уникнути мерехтіння.
+    pygame.display.flip()
+    clock.tick(FPS) #Обмежує кадри на 60 за секунду, аби наявність потужного ПК нічого не зруйнувало
+
 
