@@ -62,8 +62,8 @@ def test_game_quit_to_menu(game_scene):
     # Arrange (Підготовка): Створення події натискання клавіші Q
     event = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q)
 
-    #Передаємо цю подію в обробник сцени
+    # Передаємо цю подію в обробник сцени
     result = game_scene.handle_event(event)
 
-    #Переконуємося, що сцена наказала повернутися в меню
+    # Переконуємося, що сцена наказала повернутися в меню
     assert result == "menu"
