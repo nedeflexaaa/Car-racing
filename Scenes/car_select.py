@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 
+
 class CarSelectScene:
     def __init__(self, screen):
         self.screen = screen
@@ -9,7 +10,7 @@ class CarSelectScene:
 
         # Маленький шрифт для підказки про кольори
         self.hint_font = pygame.font.SysFont(None, 40)
-        
+
         self.options = ["Fast & Slippery", "Balanced Car", "Slow & Heavy", "Back to Menu"]
         self.selected = 0
 
@@ -41,22 +42,22 @@ class CarSelectScene:
         # Базові кольори для заглушок (якщо файлу немає)
         debug_colors = [(255, 0, 0), (0, 0, 255), (0, 255, 0), (255, 255, 0)]
 
-        for car_type_paths in image_paths: # Цикл з додавання зображень з різним кольором кожній машинці
+        for car_type_paths in image_paths:  # Цикл з додавання зображень з різним кольором кожній машинці
             color_variants = []  # Пустий масив
-            for color_index, path in enumerate(car_type_paths): # Проходження по масиву: кожний колір дає всій path там має свій color_index
+            for color_index, path in enumerate(car_type_paths):  # Проходження по масиву: кожний колір дає всій path там має свій color_index
                 try:
                     img = pygame.image.load(path).convert_alpha()
                     img = pygame.transform.scale(img, (120, 240))
-                    color_variants.append(img) # Саме додавання зображення в масив
+                    color_variants.append(img)  # Саме додавання зображення в масив
                 except FileNotFoundError:
                     # Якщо картинки немає, робимо заглушку відповідного кольору
                     placeholder = pygame.Surface((120, 240))
                     placeholder.fill(debug_colors[color_index])
                     color_variants.append(placeholder)
-            self.car_images.append(color_variants) # Завантаження кожного з маленьких масивчіків в один побільше
-                   
+            self.car_images.append(color_variants)  # Завантаження кожного з маленьких масивчіків в один побільше
+
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN: # З всіх івентів ми перевіряємо лише ті, де натискаються клавіші.
+        if event.type == pygame.KEYDOWN:  # З всіх івентів ми перевіряємо лише ті, де натискаються клавіші.
             # Навігація по списку машин (Вгору/Вниз)
             if event.key == pygame.K_UP:
                 self.selected = (self.selected - 1) % len(self.options)
@@ -75,7 +76,7 @@ class CarSelectScene:
                 if self.selected < 3:
                     num_colors = len(self.car_images[self.selected])
                     self.selected_colors[self.selected] = (self.selected_colors[self.selected] + 1) % num_colors
-        
+
         # Вибір
             elif event.key == pygame.K_RETURN:
                 if self.selected == 3:  # Кнопка "Back to Menu"

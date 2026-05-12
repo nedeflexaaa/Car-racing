@@ -1,0 +1,4 @@
+[flake8]
+exclude = venv, .venv, __pycache__, .git, Assets
+max-line-length = 190
+extend-ignore = F403, F405, E402, F401, E712

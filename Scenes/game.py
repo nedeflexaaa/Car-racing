@@ -4,6 +4,7 @@ from Entities.car import Car
 from Entities.map import TrackMap
 from Utils.camera import Camera
 
+
 class GameScene:
     def __init__(self, screen, car_index=0, color_index=0):
         self.screen = screen
@@ -70,7 +71,7 @@ class GameScene:
         self.current_map_index = 0
         self.font = pygame.font.SysFont(None, 40)
         self.big_font = pygame.font.SysFont(None, 80)
-        self.last_tick = pygame.time.get_ticks() # Знадобиться пізніше для того аби впевнитись, що просадка фпс
+        self.last_tick = pygame.time.get_ticks()  # Знадобиться пізніше для того аби впевнитись, що просадка фпс
         # не впливала на роботу таймера
 
 # --- ЗАВАНТАЖЕННЯ ЗВУКІВ ---
@@ -112,8 +113,6 @@ class GameScene:
 
         self.load_map()
 
-
-
     def load_map(self):
         config = self.maps_config[self.current_map_index]
         MapClass = config["map_class"]
@@ -121,10 +120,10 @@ class GameScene:
 
         start_x, start_y = config["start_pos"]
         self.player = Car(start_x, start_y, self.car_index, self.color_index, config["car_size"])
-        self.player.angle = config["start_angle"] # Даємо початковий кут
-        self.player.rotate() # Використовуємо метод rotate() з car.py
+        self.player.angle = config["start_angle"]  # Даємо початковий кут
+        self.player.rotate()  # Використовуємо метод rotate() з car.py
 
-        self.all_sprites = pygame.sprite.Group() # Групування спрайтів(поки одного) для можливості в майбутньому
+        self.all_sprites = pygame.sprite.Group()  # Групування спрайтів(поки одного) для можливості в майбутньому
         # додати інші машини\перешкоди
         self.all_sprites.add(self.player)
 
@@ -155,8 +154,10 @@ class GameScene:
             if event.key == pygame.K_r:
                 self.load_map()
             elif event.key == pygame.K_q:
-                if getattr(self, 'engine_sound', None): self.engine_sound.stop()
-                if getattr(self, 'rev_sound', None): self.rev_sound.stop()
+                if getattr(self, 'engine_sound', None):
+                    self.engine_sound.stop()
+                if getattr(self, 'rev_sound', None):
+                    self.rev_sound.stop()
                 pygame.mixer.music.stop()
                 return "menu"
 
@@ -164,8 +165,10 @@ class GameScene:
                 if event.key == pygame.K_r:
                     self.load_map()
                 elif event.key == pygame.K_q:
-                    if getattr(self, 'engine_sound', None): self.engine_sound.stop()
-                    if getattr(self, 'rev_sound', None): self.rev_sound.stop()
+                    if getattr(self, 'engine_sound', None):
+                        self.engine_sound.stop()
+                    if getattr(self, 'rev_sound', None):
+                        self.rev_sound.stop()
                     pygame.mixer.music.stop()
                     return "menu"
         return None
@@ -175,16 +178,18 @@ class GameScene:
 
         # --- ВІДЛІК ПЕРЕД СТАРТОМ ---
         if self.countdown_active:
-            elapsed_cd = (current_tick - self.countdown_start) / 1000.0 # Змінюється раз на секунду
+            elapsed_cd = (current_tick - self.countdown_start) / 1000.0  # Змінюється раз на секунду
             current_step = 3 - int(elapsed_cd)
 
-            if current_step != self.last_countdown_step: # last_countdown_step на самому початку стоїть 4
+            if current_step != self.last_countdown_step:  # last_countdown_step на самому початку стоїть 4
                 if current_step > 0:
-                    if getattr(self, 'beep_sound', None): self.beep_sound.play() # На випадок, якщо звуку немає прописується getattr
+                    if getattr(self, 'beep_sound', None):
+                        self.beep_sound.play()  # На випадок, якщо звуку немає прописується getattr
                     # Оскільки якщо немає файлу звуку і викликати команду self.beep_sound.play(), то буде помилка
                 elif current_step == 0:
-                    if getattr(self, 'go_sound', None): self.go_sound.play()
-                self.last_countdown_step = current_step # Оскільки тут оновлюється пам'ять поки не перепишеться таймером,
+                    if getattr(self, 'go_sound', None):
+                        self.go_sound.play()
+                self.last_countdown_step = current_step  # Оскільки тут оновлюється пам'ять поки не перепишеться таймером,
                 # То пищащий звук буде звучати лише раз на секунду
 
             if current_step < 0:
@@ -193,9 +198,9 @@ class GameScene:
                 pygame.mixer.music.unpause()
             else:
                 self.screen.fill(BG_COLOR)
-                self.screen.blit(self.track.image, self.camera.apply(self.track)) # screen.blit - по факту це малювання підготованих картинок
+                self.screen.blit(self.track.image, self.camera.apply(self.track))  # screen.blit - по факту це малювання підготованих картинок
                 for sprite in self.all_sprites:
-                    self.screen.blit(sprite.image, self.camera.apply(sprite)) #Ставимо спрайт
+                    self.screen.blit(sprite.image, self.camera.apply(sprite))  # Ставимо спрайт
 
                 text_str = str(current_step) if current_step > 0 else "GO!"
                 color = (255, 200, 0) if current_step > 0 else (0, 255, 0)
@@ -207,10 +212,10 @@ class GameScene:
                 self.last_tick = current_tick
                 return None
 
-        dt = (current_tick - self.last_tick) / 1000.0 # Тут не можна просто віднімати по 0.016 кожного кадру (бо 60 FPS це 16 мілісекунд на кадр)
+        dt = (current_tick - self.last_tick) / 1000.0  # Тут не можна просто віднімати по 0.016 кожного кадру (бо 60 FPS це 16 мілісекунд на кадр)
         # бо на слабкому комп'ютері де гра тягне лише 30 фпс буде в два рази більше часу
         self.last_tick = current_tick
-        #Тому ми робимо так: записуємо час: self.last_tick = pygame.time.get_ticks() (Наприклад, 1000).
+        # Тому ми робимо так: записуємо час: self.last_tick = pygame.time.get_ticks() (Наприклад, 1000).
         # Робимо  розрахунки, малюємо кадр. В наступному кадрі дивимося поточний час: current_tick = pygame.time.get_ticks() (Наприклад, 1016).
         # Рахуємо різницю: dt = (1016 - 1000) / 1000 = 0.016 секунди.
         # Віднімаємо цей dt від таймера.І оновлюємо self.last_tick = current_tick, щоб наступного кадру рахувати різницю вже від 1016.
@@ -238,23 +243,23 @@ class GameScene:
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             if getattr(self, 'rev_sound', None) and (current_tick - self.last_rev_time > self.rev_cooldown):
                 self.rev_sound.play()
-                self.last_rev_time = current_tick # Запис останнього рева двигуна щоб не спамило звуком
+                self.last_rev_time = current_tick  # Запис останнього рева двигуна, щоб не спамило звуком
 
         # --- ФІЗИКА ---
         old_position = pygame.math.Vector2(self.player.position)
         old_angle = self.player.angle
 
         self.all_sprites.update()
-        self.camera.update(self.player) # Камера слідкує лише за гравцем
+        self.camera.update(self.player)  # Камера слідкує лише за гравцем
 
         if getattr(self, 'engine_sound', None):
-            speed_ratio = abs(self.player.velocity) / self.player.max_speed # Чим більша швидкість, тим гучніше двигун
+            speed_ratio = abs(self.player.velocity) / self.player.max_speed  # Чим більша швидкість, тим гучніше двигун
             new_volume = 0.2 + (0.8 * speed_ratio)
             self.engine_sound.set_volume(new_volume)
 
         # Зіткнення з трасою
         if pygame.sprite.collide_mask(self.player, self.track):
-            if getattr(self, 'crash_sound', None) and abs(self.player.velocity) > 2: #Звук лише при такій швидкості
+            if getattr(self, 'crash_sound', None) and abs(self.player.velocity) > 2:  # Звук лише при такій швидкості
                 self.crash_sound.play()
 
             self.player.position = old_position
@@ -277,8 +282,10 @@ class GameScene:
                     self.current_map_index += 1
 
                     if self.current_map_index >= len(self.maps_config):
-                        if getattr(self, 'engine_sound', None): self.engine_sound.stop()
-                        if getattr(self, 'rev_sound', None): self.rev_sound.stop()
+                        if getattr(self, 'engine_sound', None):
+                            self.engine_sound.stop()
+                        if getattr(self, 'rev_sound', None):
+                            self.rev_sound.stop()
                         pygame.mixer.music.stop()
                         return "victory"
 
@@ -296,12 +303,12 @@ class GameScene:
             debug_text = self.font.render(f"CP {i}", True, color)
             self.screen.blit(debug_text, (adjusted_rect.x, adjusted_rect.y - 35))
 
-        for sprite in self.all_sprites: # Малюємо всі спрайти зі зсувом камери
+        for sprite in self.all_sprites:  # Малюємо всі спрайти зі зсувом камери
             self.screen.blit(sprite.image, self.camera.apply(sprite))
-        #Наприклад екран має ширину 1000 пікселів (центр = 500). машина стоїть на карті на координаті X = 8000.
-        #Поруч із машиною стоїть чекпоінт на координаті X = 8200. Камера рахує зміщення через свій (update)
-        #Зсув камери = -7500. Беремо реальні координати машинки (8000) і додаємо зсув (-7500) => 500 нова координата машинки
-        #Точно такий самий зсув і до всіх інших об'єктів
+        # Наприклад екран має ширину 1000 пікселів (центр = 500). машина стоїть на карті на координаті X = 8000.
+        # Поруч із машиною стоїть чекпоінт на координаті X = 8200. Камера рахує зміщення через свій (update)
+        # Зсув камери = -7500. Беремо реальні координати машинки (8000) і додаємо зсув (-7500) => 500 нова координата машинки
+        # Точно такий самий зсув і до всіх інших об'єктів
 
         # --- HUD ---
         lap_text = self.font.render(f"Lap: {self.lap}/{self.target_laps}", True, (255, 255, 255))
@@ -313,6 +320,6 @@ class GameScene:
         self.screen.blit(lap_text, (20, 20))
         self.screen.blit(map_text, (20, 60))
         self.screen.blit(timer_text, (SCREEN_WIDTH - 150, 20))
-        #Малювання різних надписів
+        # Малювання різних надписів
 
         return None

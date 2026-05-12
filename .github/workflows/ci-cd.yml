@@ -1,0 +1,45 @@
+name: CI Pipeline
+
+# Коли запускати: при кожному push в репозиторій
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Завантаження коду на сервер
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Встановлення Python 3.13
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    # 3. Встановлення бібліотек з файлу (pygame, pytest, flake8)
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. Перевірка стилю коду (Лінтінг)
+    - name: Run Flake8
+      run: |
+        flake8 --format=html --htmldir=flake8_report
+
+    # 5. Запуск модульних тестів
+    - name: Run Pytest
+      run: |
+        pytest --html=pytest_report.html --self-contained-html
+
+    # 6. Збереження звітів (щоб можна було їх звантажити з GitHub)
+    - name: Upload CI Reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: CI-Reports
+        path: |
+          flake8_report/
+          pytest_report.html

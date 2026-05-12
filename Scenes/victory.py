@@ -21,14 +21,14 @@ class VictoryScene:
                 self.images.append(img)
             except Exception as e:
                 print(f"Помилка завантаження картинки {path}: {e}")
-                
+
         if not self.images:
             fallback = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
             fallback.fill((0, 150, 0))
             self.images.append(fallback)
         self.current_image_index = 0
         self.last_image_change_time = pygame.time.get_ticks()
-        self.image_display_time = 2000  
+        self.image_display_time = 2000
 
         try:
             pygame.mixer.music.load("Assets/victory/music.mp3")
@@ -36,13 +36,14 @@ class VictoryScene:
             pygame.mixer.music.play(-1)  # Грає по колу
         except Exception as e:
             print(f"Помилка музики перемоги: {e}")
+
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
-                pygame.mixer.music.stop()  
+                pygame.mixer.music.stop()
                 return "menu"
         return None
-    
+
     def run(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_image_change_time > self.image_display_time:
